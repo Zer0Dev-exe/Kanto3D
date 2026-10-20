@@ -1,17 +1,17 @@
 //! Modo captura (herramienta de desarrollo): renderiza una escena sin abrir ventana,
 //! la guarda como PNG y sale. Se activa con la variable de entorno
-//! `POKEGAME_SNAPSHOT=<escena>:<ruta.png>`.
+//! `KANTO3D_SNAPSHOT=<escena>:<ruta.png>`.
 //!
 //! Escenas: `title`, `overworld`, `menu` (equipo), `start`, `bag`, `profile`, `dex`, `save`,
 //! `shop`, `quiz`, `battle`, `trainer`, `gallery`, `gallery-back` y `p<especie>a<grados>`
 //! (primer plano de un Pokémon girado).
 //!
-//! Más variables: `POKEGAME_WILD=<especie>` (salvaje del combate), `POKEGAME_TRAINER=<mapa>:<n>`
-//! (entrenador del combate), `POKEGAME_MAP=<n>` (empezar en ese mapa, junto a su primera
-//! salida), `POKEGAME_PLACE=<mapa>,<x>,<y>`, `POKEGAME_KEYS=enter,down,z` (simula esas teclas,
-//! una cada pocos fotogramas), `POKEGAME_FRAMES=<n>` (fotograma de la captura) y
-//! `POKEGAME_TRACE=<archivo>` (posición del jugador y de la cámara en cada fotograma) y
-//! `POKEGAME_BADGES=<bits>` (medallas de la partida de prueba). Más detalles en el README.
+//! Más variables: `KANTO3D_WILD=<especie>` (salvaje del combate), `KANTO3D_TRAINER=<mapa>:<n>`
+//! (entrenador del combate), `KANTO3D_MAP=<n>` (empezar en ese mapa, junto a su primera
+//! salida), `KANTO3D_PLACE=<mapa>,<x>,<y>`, `KANTO3D_KEYS=enter,down,z` (simula esas teclas,
+//! una cada pocos fotogramas), `KANTO3D_FRAMES=<n>` (fotograma de la captura) y
+//! `KANTO3D_TRACE=<archivo>` (posición del jugador y de la cámara en cada fotograma) y
+//! `KANTO3D_BADGES=<bits>` (medallas de la partida de prueba). Más detalles en el README.
 
 use bevy::camera::RenderTarget;
 use bevy::prelude::*;
@@ -48,9 +48,9 @@ pub struct Snapshot {
 
 impl Snapshot {
     pub fn from_env() -> Option<Self> {
-        let value = std::env::var("POKEGAME_SNAPSHOT").ok()?;
+        let value = std::env::var("KANTO3D_SNAPSHOT").ok()?;
         let (scene, out) = value.split_once(':')?;
-        let capture_at = std::env::var("POKEGAME_FRAMES").ok().and_then(|v| v.parse().ok()).unwrap_or(90);
+        let capture_at = std::env::var("KANTO3D_FRAMES").ok().and_then(|v| v.parse().ok()).unwrap_or(90);
         Some(Self { scene: scene.into(), out: out.into(), frame: 0, capture_at, target: Handle::default() })
     }
 
@@ -84,7 +84,7 @@ fn demo(app: &mut App) {
     for (item, n) in [(SUPER_BALL, 4), (ULTRA_BALL, 1), (SUPER_POTION, 3), (REVIVE, 1), (REPEL, 2), (ESCAPE_ROPE, 1), (RARE_CANDY, 1)] {
         bag.add(item, n);
     }
-    let badges = std::env::var("POKEGAME_BADGES").ok().and_then(|v| v.parse().ok()).unwrap_or(0b0000_0111);
+    let badges = std::env::var("KANTO3D_BADGES").ok().and_then(|v| v.parse().ok()).unwrap_or(0b0000_0111);
     let mut progress = Progress { money: 8420, badges, seconds: 3.0 * 3600.0 + 25.0 * 60.0, steps: 5210, ..Progress::default() };
     for s in [CHARMANDER, PIKACHU, GEODUDE, STARYU, ONIX, ZUBAT, CLEFAIRY, PIDGEY, RATTATA, CATERPIE, WEEDLE, STARMIE, ODDISH] {
         progress.see(s);
@@ -107,11 +107,11 @@ impl Plugin for SnapshotPlugin {
         }
 
         // Dónde empezar
-        let place = std::env::var("POKEGAME_PLACE").ok().and_then(|v| {
+        let place = std::env::var("KANTO3D_PLACE").ok().and_then(|v| {
             let mut it = v.split(',').map(|n| n.trim().parse::<i32>());
             Some((it.next()?.ok()? as usize, IVec2::new(it.next()?.ok()?, it.next()?.ok()?)))
         });
-        let map = std::env::var("POKEGAME_MAP").ok().and_then(|v| v.parse::<usize>().ok());
+        let map = std::env::var("KANTO3D_MAP").ok().and_then(|v| v.parse::<usize>().ok());
         let start = place.or_else(|| {
             let id = map.or(match scene {
                 "overworld" | "menu" | "start" | "bag" | "profile" | "dex" | "save" => Some(kanto::PALLET),
@@ -156,7 +156,7 @@ impl Plugin for SnapshotPlugin {
                 app.insert_resource(Dialog::quiz(npc_id(kanto::LAB_IN, 1), &Progress::default()));
             }
             "trainer" => {
-                let (map, index) = std::env::var("POKEGAME_TRAINER")
+                let (map, index) = std::env::var("KANTO3D_TRAINER")
                     .ok()
                     .and_then(|v| v.split_once(':').and_then(|(a, b)| Some((a.parse().ok()?, b.parse().ok()?))))
                     .unwrap_or((kanto::GYM_PEWTER, 0));
@@ -191,7 +191,7 @@ fn capture(mut commands: Commands, mut snapshot: ResMut<Snapshot>, mut exit: Mes
 }
 
 fn press_keys(snapshot: Res<Snapshot>, mut input: ResMut<ButtonInput<KeyCode>>) {
-    let Ok(keys) = std::env::var("POKEGAME_KEYS") else {
+    let Ok(keys) = std::env::var("KANTO3D_KEYS") else {
         return;
     };
     let mut frame = 30;
@@ -252,7 +252,7 @@ fn gallery_camera(snapshot: Res<Snapshot>, mut camera: Single<&mut Transform, Wi
     };
 }
 
-/// `POKEGAME_TRACE=<archivo>`: apunta cada fotograma el tiempo, la posición del jugador y la
+/// `KANTO3D_TRACE=<archivo>`: apunta cada fotograma el tiempo, la posición del jugador y la
 /// de la cámara (para medir que el movimiento sea fluido).
 fn trace(
     time: Res<Time>,
@@ -261,7 +261,7 @@ fn trace(
     mut out: Local<Option<std::fs::File>>,
 ) {
     use std::io::Write;
-    let Ok(path) = std::env::var("POKEGAME_TRACE") else { return };
+    let Ok(path) = std::env::var("KANTO3D_TRACE") else { return };
     let file = out.get_or_insert_with(|| std::fs::File::create(path).expect("no se pudo crear la traza"));
     let (Ok(p), Ok(c)) = (player.single(), camera.single()) else { return };
     let (p, c) = (p.translation, c.translation);

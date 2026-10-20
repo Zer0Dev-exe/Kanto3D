@@ -643,7 +643,7 @@ impl Creature {
 pub fn random_wild(table: &[(usize, u32)], levels: (u32, u32)) -> Creature {
     let mut rng = rand::rng();
     // Para capturas de desarrollo (ver snapshot.rs)
-    if let Some(species) = std::env::var("POKEGAME_WILD").ok().and_then(|v| v.parse().ok()) {
+    if let Some(species) = std::env::var("KANTO3D_WILD").ok().and_then(|v| v.parse().ok()) {
         return Creature::new(species, 5);
     }
     let total: u32 = table.iter().map(|(_, w)| w).sum();

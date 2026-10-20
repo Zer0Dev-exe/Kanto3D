@@ -155,7 +155,7 @@ fn draw(mut commands: Commands, title: Res<Title>, roots: Query<Entity, With<Tit
         ChildOf(root),
         ui::panel(Node { padding: UiRect::axes(px(40), px(16)), flex_direction: FlexDirection::Column, align_items: AlignItems::Center, ..default() }),
         children![
-            (Node { align_items: AlignItems::Center, column_gap: px(16), ..default() }, children![ui::pokeball(48.0), bold_in("PokeGame", 64.0, Color::srgb(0.86, 0.22, 0.24)), ui::pokeball(48.0)]),
+            (Node { align_items: AlignItems::Center, column_gap: px(16), ..default() }, children![ui::pokeball(48.0), bold_in("Kanto3D", 64.0, Color::srgb(0.86, 0.22, 0.24)), ui::pokeball(48.0)]),
             muted("Edición Kanto", 22.0),
         ],
     ));

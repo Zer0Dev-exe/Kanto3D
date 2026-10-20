@@ -1,4 +1,4 @@
-# PokeGame — Edición Kanto
+# Kanto3D
 
 Un juego de Pokémon en 3D hecho desde cero con [Bevy](https://bevyengine.org/) (Rust). Recorre Kanto
 como en Pokémon Rojo: 10 ciudades, las rutas 1 a 25, cuevas, los 8 gimnasios y la Liga Pokémon,
@@ -143,7 +143,7 @@ está sobre un obstáculo, que todo Kanto es alcanzable y que las medallas lo ab
 - escritura **atómica** (archivo temporal + `fsync` + renombrar) en un hilo aparte, así que
   el juego no se congela y un corte de luz nunca estropea la partida anterior.
 
-Se guarda en `~/.local/share/pokegame/partida.sav` (o en `$POKEGAME_SAVE`).
+Se guarda en `~/.local/share/kanto3d/partida.sav` (o en `$KANTO3D_SAVE`).
 
 ## Desarrollo
 
@@ -157,7 +157,7 @@ cargo test        # mapas, tipos, guardado, mallas de los Pokémon, caracteres d
 comprobar cambios visuales sin abrir el juego:
 
 ```sh
-POKEGAME_SNAPSHOT=dex:dex.png cargo run
+KANTO3D_SNAPSHOT=dex:dex.png cargo run
 ```
 
 Escenas: `title`, `overworld`, `menu`, `start`, `bag`, `profile`, `dex`, `save`, `shop`, `quiz`,
@@ -166,15 +166,15 @@ Pokémon). Otras variables:
 
 | Variable | Para qué |
 |---|---|
-| `POKEGAME_MAP=<n>` | Empezar en ese mapa |
-| `POKEGAME_PLACE=<mapa>,<x>,<y>` | Empezar en esa casilla |
-| `POKEGAME_KEYS=up*20,enter,z` | Simular teclas (`*n` = mantener n fotogramas, `wait*n` = esperar) |
-| `POKEGAME_FRAMES=<n>` | Fotograma en el que se hace la captura |
-| `POKEGAME_WILD=<especie>` | Pokémon salvaje del combate |
-| `POKEGAME_TRAINER=<mapa>:<n>` | Entrenador del combate |
-| `POKEGAME_BADGES=<bits>` | Medallas de la partida de prueba |
-| `POKEGAME_TRACE=<archivo>` | Posición del jugador y la cámara en cada fotograma |
-| `POKEGAME_SAVE=<archivo>` | Dónde guardar la partida |
+| `KANTO3D_MAP=<n>` | Empezar en ese mapa |
+| `KANTO3D_PLACE=<mapa>,<x>,<y>` | Empezar en esa casilla |
+| `KANTO3D_KEYS=up*20,enter,z` | Simular teclas (`*n` = mantener n fotogramas, `wait*n` = esperar) |
+| `KANTO3D_FRAMES=<n>` | Fotograma en el que se hace la captura |
+| `KANTO3D_WILD=<especie>` | Pokémon salvaje del combate |
+| `KANTO3D_TRAINER=<mapa>:<n>` | Entrenador del combate |
+| `KANTO3D_BADGES=<bits>` | Medallas de la partida de prueba |
+| `KANTO3D_TRACE=<archivo>` | Posición del jugador y la cámara en cada fotograma |
+| `KANTO3D_SAVE=<archivo>` | Dónde guardar la partida |
 
 ## Aviso
 

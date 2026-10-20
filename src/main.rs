@@ -1,4 +1,4 @@
-//! PokeGame: un juego de Pokémon en 3D hecho con Bevy. Ver README.md.
+//! Kanto3D: un juego de Pokémon en 3D hecho con Bevy. Ver README.md.
 
 mod battle;
 mod dev;
@@ -47,7 +47,7 @@ fn main() {
     } else {
         app.add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
-                title: "PokeGame".into(),
+                title: "Kanto3D".into(),
                 resolution: (dev::snapshot::WIDTH, dev::snapshot::HEIGHT).into(),
                 ..default()
             }),

@@ -31,9 +31,9 @@ pub struct SaveData {
     pub facing: IVec2,
 }
 
-/// Dónde se guarda: `$POKEGAME_SAVE`, o `~/.local/share/pokegame/partida.sav`.
+/// Dónde se guarda: `$KANTO3D_SAVE`, o `~/.local/share/kanto3d/partida.sav`.
 pub fn save_path() -> PathBuf {
-    if let Ok(path) = std::env::var("POKEGAME_SAVE") {
+    if let Ok(path) = std::env::var("KANTO3D_SAVE") {
         return path.into();
     }
     let base = std::env::var_os("XDG_DATA_HOME")
@@ -41,7 +41,7 @@ pub fn save_path() -> PathBuf {
         .or_else(|| std::env::var_os("HOME").map(|h| PathBuf::from(h).join(".local/share")))
         .or_else(|| std::env::var_os("APPDATA").map(PathBuf::from))
         .unwrap_or_else(|| PathBuf::from("."));
-    base.join("pokegame").join("partida.sav")
+    base.join("kanto3d").join("partida.sav")
 }
 
 // ---------------------------------------------------------------- escribir
@@ -226,7 +226,7 @@ impl Reader<'_> {
 
 pub fn decode(bytes: &[u8]) -> Result<SaveData, LoadError> {
     if bytes.len() < 13 || &bytes[..4] != MAGIC {
-        return Err(LoadError::Corrupt("no es una partida de PokeGame"));
+        return Err(LoadError::Corrupt("no es una partida de Kanto3D"));
     }
     if bytes[4] != VERSION {
         return Err(LoadError::Corrupt("versión desconocida"));
@@ -409,7 +409,7 @@ mod tests {
 
     #[test]
     fn atomic_write_replaces_the_file() {
-        let dir = std::env::temp_dir().join(format!("pokegame-test-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("kanto3d-test-{}", std::process::id()));
         let path = dir.join("partida.sav");
         write_atomic(&path, b"uno").unwrap();
         write_atomic(&path, b"dos").unwrap();

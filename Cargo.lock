@@ -3391,6 +3391,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "kanto3d"
+version = "1.0.0"
+dependencies = [
+ "bevy",
+ "rand 0.9.5",
+ "ttf-parser",
+]
+
+[[package]]
 name = "khronos-egl"
 version = "6.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4454,15 +4463,6 @@ dependencies = [
  "fdeflate",
  "flate2",
  "miniz_oxide 0.8.9",
-]
-
-[[package]]
-name = "pokegame"
-version = "0.1.0"
-dependencies = [
- "bevy",
- "rand 0.9.5",
- "ttf-parser",
 ]
 
 [[package]]
