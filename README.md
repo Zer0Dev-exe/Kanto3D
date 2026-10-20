@@ -1,4 +1,21 @@
+<div align="center">
+
 # Kanto3D
+
+### Recorre Kanto en 3D: de Pueblo Paleta a la Liga Pokémon, con tu Pokémon siguiéndote
+
+*64 mapas · 30 Pokémon esculpidos a mano · 8 gimnasios · Alto Mando y Campeón · partida guardada de 86 bytes*
+
+[![Versión](https://img.shields.io/github/v/release/Zer0Dev-exe/Kanto3D?label=versi%C3%B3n&color=e3350d)](https://github.com/Zer0Dev-exe/Kanto3D/releases)
+[![Rust](https://img.shields.io/badge/Rust-2024-b7410e?logo=rust)](https://www.rust-lang.org/)
+[![Bevy](https://img.shields.io/badge/Bevy-0.20-232326)](https://bevyengine.org/)
+[![Tests](https://img.shields.io/badge/tests-17%20pasan-3c9a3c)](#desarrollo)
+
+[Cómo jugar](#cómo-jugar) · [Controles](#controles) · [Qué hay](#qué-hay) · [Cómo funciona](#cómo-funciona) · [Desarrollo](#desarrollo)
+
+</div>
+
+---
 
 Un juego de Pokémon en 3D hecho desde cero con [Bevy](https://bevyengine.org/) (Rust). Recorre Kanto
 como en Pokémon Rojo: 10 ciudades, las rutas 1 a 25, cuevas, los 8 gimnasios y la Liga Pokémon,
